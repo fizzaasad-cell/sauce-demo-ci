@@ -11,19 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Set up Node.js
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3. Navigate to the playwright-e2e folder and install dependencies
       - name: Install dependencies
+        working-directory: playwright-e2e
         run: npm install
 
+      # 4. Install Playwright browsers
       - name: Install Playwright browsers
+        working-directory: playwright-e2e
         run: npx playwright install --with-deps
 
-      - name: Run Playwright E2E Tests
+      # 5. Run Playwright tests
+      - name: Run E2E tests
+        working-directory: playwright-e2e
         run: npx playwright test
